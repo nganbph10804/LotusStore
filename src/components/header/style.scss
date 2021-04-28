@@ -28,7 +28,18 @@
     }
     .registration{
         position: absolute;
-        top: 30%; right: 15px;
+        top: 30%; right: 65px;
+        span{
+            font-weight: 500;
+            font-size: 25px;
+            cursor: pointer;
+            
+        }
+        
+    }
+    .login{
+        position: absolute;
+        top: 30%; right: 10px;
         span{
             font-weight: 500;
             font-size: 25px;
