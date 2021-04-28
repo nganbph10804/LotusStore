@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import Footer from './components/Footer';
 import Login from './pages/Login';
+import ForgotPsw from './pages/Recovery';
 
 
 
@@ -47,6 +48,9 @@ let authListener=null;
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
+        <Route exact path="/recovery">
+         <ForgotPsw user={user}/>
+          </Route>
           <Route exact path="/registration">
           {user? <Redirect to="/" />:<Registration user={user}/>}
           </Route>

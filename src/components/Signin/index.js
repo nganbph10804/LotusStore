@@ -3,6 +3,8 @@ import Button from '../Forms/Button';
 import './style.scss';
 import { signInWithGoogle,auth} from  './../../firebase/ultils';
 import FormInput from './../Forms/Forminput';
+import AuthWraper from '../AuthWraper';
+import {Link} from 'react-router-dom';
 const Signin = () => {
 
 const initialState={
@@ -36,12 +38,12 @@ const handleSubmit = async e =>{
     }
 
 }
+
+const configAuthWrapper={
+    headline : 'Login'
+};
     return (
-        <div className="signin">
-            <div className="wrap">
-                <h2>
-                    Login
-                </h2> 
+        <AuthWraper {...configAuthWrapper}>
 
                <div className="formWrap">
                    <form onSubmit={handleSubmit}>
@@ -51,6 +53,7 @@ const handleSubmit = async e =>{
                         value={sigin.email}
                         placeholder="email"
                         onChange={handleChange}
+            
                     
                     />
                     <FormInput
@@ -73,11 +76,15 @@ const handleSubmit = async e =>{
                             </Button>
                             </div>
                         </div>
+                        <div className="links">
+                            <Link to="/recovery">
+                                Reset Password
+                            </Link>
+                        </div>
 
                    </form>
                </div>
-            </div>
-        </div>
+        </AuthWraper>
     )
 }
 

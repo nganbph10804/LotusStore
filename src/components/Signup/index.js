@@ -4,6 +4,7 @@ import FormInput from '../Forms/Forminput';
 import './style.scss';
 
 import {auth,handleUserProfile} from './../../firebase/ultils';
+import AuthWraper from '../AuthWraper';
 
 
 const Signup = () => {
@@ -26,13 +27,14 @@ const handleChange =(e)=>{
    
 }
 console.log(signup);
+const [err,setErr] =useState('');
 const handleSubmit = async event=>{
     event.preventDefault();
 
     const {displayName, email,password,confirmPassword} = signup;
-//    console.log(signup);
+
     if(password !== confirmPassword){
-      
+      setErr('Password dont match!');
       
         return;
     }
@@ -53,15 +55,14 @@ const handleSubmit = async event=>{
 
 }
 
+const configAuthWrapper={
+    headline: 'Registration'
+}
 
 
     return (
-        <div className="signup">
-            <div className="wrap">
-                <h2>
-                    signup
-                </h2>
-                {signup.errors? signup.errors :''}
+       <AuthWraper {...configAuthWrapper}>
+                {err? err :''}
                 <div className="formWrap">
 
                 
@@ -103,8 +104,7 @@ const handleSubmit = async event=>{
                     </Button>
                 </form>
                 </div>
-            </div>
-        </div>
+        </AuthWraper>
     )
 }
 
