@@ -48,5 +48,16 @@
         }
         
     }
+    .dashboard{
+        position: absolute;
+        top: 30%; right: 150px;
+        span{
+            font-weight: 500;
+            font-size: 25px;
+            cursor: pointer;
+            
+        }
+        
+    }
 
 }

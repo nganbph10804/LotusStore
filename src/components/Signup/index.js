@@ -5,33 +5,28 @@ import './style.scss';
 
 import {auth,handleUserProfile} from './../../firebase/ultils';
 import AuthWraper from '../AuthWraper';
+import { withRouter } from 'react-router-dom';
 
 
-const Signup = () => {
+const Signup = ({props}) => {
 
-        const initialState={
-            displayName:'',
-            email:'',
-            password: '',
-            confirmPassword:''
-        }
-const [signup, setSignup] = useState(initialState);
+        const initialState='';
+const [displayName, setDisplayName] = useState(initialState);
+const [email, setEmail] = useState(initialState);
+const [password, setPassword] = useState(initialState);
+const [confirmPassword, setConfirmPassword] = useState(initialState);
 
-const handleChange =(e)=>{
-    const {name,value} =e.target;
-    
-    setSignup(prev=>({
-        ...prev,
-        [name] :value
-    }));
-   
+
+const resetForm = ()=>{
+    setPassword('');
+    setEmail('');
+    setConfirmPassword("");
+    setDisplayName('');
 }
-console.log(signup);
-const [err,setErr] =useState('');
+const [err,setErr] =useState([]);
 const handleSubmit = async event=>{
     event.preventDefault();
 
-    const {displayName, email,password,confirmPassword} = signup;
 
     if(password !== confirmPassword){
       setErr('Password dont match!');
@@ -45,12 +40,13 @@ const handleSubmit = async event=>{
 
         await handleUserProfile(user,{displayName});
         
-        setSignup({
-            ...initialState
-        });
+       resetForm();
+       props.history.push('/');
 
     } catch (error) {
         console.log(error);
+        setErr(error.message);
+       
     }
 
 }
@@ -71,32 +67,32 @@ const configAuthWrapper={
                     <FormInput
                     type="text"
                     name="displayName"
-                    value={signup.displayName}
+                    value={displayName}
                     placeholder="Fullname"
-                    onChange={handleChange}
+                    handleChange={e=>setDisplayName(e.target.value)}
                     />
                     <FormInput
                     type="text"
                     name="email"
-                    value={signup.email}
+                    value={email}
                     placeholder="Email"
-                    onChange={handleChange}
+                    handleChange={e=>setEmail(e.target.value)}
                     />
 
                     <FormInput
                     type="password"
                     name="password"
-                    value={signup.password}
+                    value={password}
                     placeholder="Password"
-                    onChange={handleChange}
+                    handleChange={e=>setPassword(e.target.value)}
                     />
 
                     <FormInput
                     type="password"
                     name="confirmPassword"
-                    value={signup.confirmPassword}
+                    value={confirmPassword}
                     placeholder="Confirm Password"
-                    onChange={handleChange}
+                    handleChange={e=>setConfirmPassword(e.target.value)}
                     />
 
                     <Button type="submit">
@@ -108,4 +104,4 @@ const configAuthWrapper={
     )
 }
 
-export default Signup
+export default withRouter(Signup)

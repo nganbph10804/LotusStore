@@ -4,37 +4,38 @@ import './style.scss';
 import { signInWithGoogle,auth} from  './../../firebase/ultils';
 import FormInput from './../Forms/Forminput';
 import AuthWraper from '../AuthWraper';
-import {Link} from 'react-router-dom';
-const Signin = () => {
+import {Link,withRouter} from 'react-router-dom';
+
+
+const Signin = ({props}) => {
+ const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const [err, setErr] = useState([]);
 
 const initialState={
     email:'',
     password:''
 }
-const  [sigin, setSigin] = useState(initialState);
 
-const handleChange=(e)=>{
-    const {name,value}= e.target;
-
-    setSigin(prevValue=>({
-        ...prevValue,
-        [name]:value
-    }));
+const resetForm = ()=>{
+    setPassword('');
+    setEmail('');
 }
-
+ 
 
 const handleSubmit = async e =>{
     e.preventDefault();
-    const {email,password} =sigin;
+  
 
     try {
         
         await auth.signInWithEmailAndPassword(email,password);
 
-        setSigin({...initialState});
-
+        resetForm();
+        props.history.push('/');
     } catch (error) {
         console.log(error);
+        setErr(error.message);
     }
 
 }
@@ -44,24 +45,24 @@ const configAuthWrapper={
 };
     return (
         <AuthWraper {...configAuthWrapper}>
-
+                {err?err:''}
                <div className="formWrap">
                    <form onSubmit={handleSubmit}>
                     <FormInput
                         type="email"
                         name="email"
-                        value={sigin.email}
+                        value={email}
                         placeholder="email"
-                        onChange={handleChange}
+                       handleChange={e=> setEmail(e.target.value)}
             
                     
                     />
                     <FormInput
                         type="password"
                         name="password"
-                        value={sigin.password}
+                        value={password}
                         placeholder="Password"
-                        onChange={handleChange}
+                        handleChange={e=> setPassword(e.target.value)}
                     
                     />
                     <Button type="submit">
@@ -88,4 +89,4 @@ const configAuthWrapper={
     )
 }
 
-export default Signin
+export default withRouter(Signin)
