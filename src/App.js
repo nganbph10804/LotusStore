@@ -25,19 +25,20 @@ import Dashboard from './pages/Dashboard';
 
 
 
-const App = props =>  {
-  // const  currentUser =  useSelector(state=>state.user.currentUser);
-  const {currentUser,setCurrentUser} =props;
+const App = ()=>  {
+  const  currentUser =  useSelector(state=>state.user.currentUser);
+  const dispatch = useDispatch();
  
   useEffect(() => {
     const authListener = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await handleUserProfile(userAuth);
         userRef.onSnapshot(snapshot => {
-          setCurrentUser({
+        dispatch( setCurrentUser({
             id: snapshot.id,
             ...snapshot.data()
-          });
+          }));
+        
         })
       }
 
@@ -93,13 +94,7 @@ const App = props =>  {
     </Router>
   );
 }
-const mapStateToProps =({user}) =>({
-    currentUser: user.currentUser
-});
 
-const mapDispatchToProps = dispatch =>({
-    setCurrentUser : user => dispatch(setCurrentUser(user))
-});
 
-export default connect(mapStateToProps, mapDispatchToProps) (App);
-// export default App
+
+export default App

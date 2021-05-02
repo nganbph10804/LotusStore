@@ -1,4 +1,4 @@
-import {React,useState} from 'react'
+import {React,useEffect,useState} from 'react'
 import Button from '../Forms/Button';
 import FormInput from '../Forms/Forminput';
 import './style.scss';
@@ -6,16 +6,40 @@ import './style.scss';
 import {auth,handleUserProfile} from './../../firebase/ultils';
 import AuthWraper from '../AuthWraper';
 import { withRouter } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
+import userTypes from '../../redux/User/user.types';
+import { resetAllForms, signInUser, signUpUser } from '../../redux/User/user.actions';
 
 
 const Signup = ({props}) => {
+    
+    const signUpSucces = useSelector(state => state.user.signUpSucces);
+    const signUpError = useSelector(state => state.user.signUpError);
+    const dispatch= useDispatch();
 
-        const initialState='';
+const initialState='';
 const [displayName, setDisplayName] = useState(initialState);
 const [email, setEmail] = useState(initialState);
 const [password, setPassword] = useState(initialState);
 const [confirmPassword, setConfirmPassword] = useState(initialState);
 
+useEffect(()=>{
+    if(signUpSucces){
+        dispatch(resetAllForms());
+    resetForm();
+    props.history.push('/');
+    
+    }
+
+
+},[signUpSucces])
+
+useEffect(()=>{
+    if( signUpError.length >0){
+        setErr(signUpError);
+    }
+
+},[signUpError])
 
 const resetForm = ()=>{
     setPassword('');
@@ -24,33 +48,15 @@ const resetForm = ()=>{
     setDisplayName('');
 }
 const [err,setErr] =useState([]);
-const handleSubmit = async event=>{
+const handleSubmit =  event =>{
     event.preventDefault();
+    dispatch(signUpUser({displayName,email,password,confirmPassword}));
+    
 
 
-    if(password !== confirmPassword){
-      setErr('Password dont match!');
-      
-        return;
-    }
-    try {
-     
-     
-        const {user} =  await auth.createUserWithEmailAndPassword(email,password);
-
-        await handleUserProfile(user,{displayName});
-        
-       resetForm();
-       props.history.push('/');
-
-    } catch (error) {
-        console.log(error);
-        setErr(error.message);
-       
-    }
+    
 
 }
-
 const configAuthWrapper={
     headline: 'Registration'
 }

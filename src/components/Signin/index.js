@@ -1,20 +1,44 @@
-import {React,useState} from 'react'
-import Button from '../Forms/Button';
-import './style.scss';
-import { signInWithGoogle,auth} from  './../../firebase/ultils';
-import FormInput from './../Forms/Forminput';
+import { React, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { resetAllForms, signInUser, signInWithGoogle } from '../../redux/User/user.actions';
 import AuthWraper from '../AuthWraper';
-import {Link,withRouter} from 'react-router-dom';
+import Button from '../Forms/Button';
+import FormInput from './../Forms/Forminput';
+import './style.scss';
 
 
-const Signin = ({props}) => {
+
+const Signin = () => {
+   const signInsuccess = useSelector(state=>state.user.singnInSuccess);
+   const signInError = useSelector(state => state.user.signInError);
+    const dispatch = useDispatch();
  const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const [err, setErr] = useState([]);
+const history = useHistory();
 
-const initialState={
-    email:'',
-    password:''
+useEffect(()=>{
+        if(signInsuccess){
+            dispatch(resetAllForms());
+       resetForm();
+       history.push('/');
+       
+        }
+
+
+},[signInsuccess])
+
+useEffect(()=>{
+
+    if(signInError.length >0){
+        setErr(signInError);
+    }
+
+
+},[signInError])
+const handleGoogleSignIn =()=>{
+    dispatch(signInWithGoogle());
 }
 
 const resetForm = ()=>{
@@ -23,23 +47,15 @@ const resetForm = ()=>{
 }
  
 
-const handleSubmit = async e =>{
+const handleSubmit =  e =>{
     e.preventDefault();
+    dispatch(signInUser({email,password}));
   
+    
 
-    try {
-        
-        await auth.signInWithEmailAndPassword(email,password);
-
-        resetForm();
-        props.history.push('/');
-    } catch (error) {
-        console.log(error);
-        setErr(error.message);
-    }
+    
 
 }
-
 const configAuthWrapper={
     headline : 'Login'
 };
@@ -68,11 +84,12 @@ const configAuthWrapper={
                     <Button type="submit">
                         Login
                     </Button>
+                    </form>
 
 
                         <div className="socialSignin">
                             <div className="row">
-                            <Button onClick={signInWithGoogle}>
+                            <Button onClick={handleGoogleSignIn}>
                                 Sign in with Google
                             </Button>
                             </div>
@@ -83,10 +100,10 @@ const configAuthWrapper={
                             </Link>
                         </div>
 
-                   </form>
+                   
                </div>
         </AuthWraper>
     )
 }
 
-export default withRouter(Signin)
+export default Signin
