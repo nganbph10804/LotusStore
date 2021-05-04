@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { resetAllForms, signInUser, signInWithGoogle } from '../../redux/User/user.actions';
+import { resetAllForms, emailSignInStart, signInWithGoogle, googleSignInStart } from '../../redux/User/user.actions';
 import AuthWraper from '../AuthWraper';
 import Button from '../Forms/Button';
 import FormInput from './../Forms/Forminput';
@@ -10,7 +10,7 @@ import './style.scss';
 
 
 const Signin = () => {
-   const signInsuccess = useSelector(state=>state.user.singnInSuccess);
+   const currentUser = useSelector(state=>state.user.currentUser);
    const signInError = useSelector(state => state.user.signInError);
     const dispatch = useDispatch();
  const [email, setEmail] = useState('');
@@ -19,26 +19,19 @@ const [err, setErr] = useState([]);
 const history = useHistory();
 
 useEffect(()=>{
-        if(signInsuccess){
-            dispatch(resetAllForms());
+        if(currentUser){
+         
        resetForm();
        history.push('/');
        
         }
 
 
-},[signInsuccess])
-
-useEffect(()=>{
-
-    if(signInError.length >0){
-        setErr(signInError);
-    }
+},[currentUser])
 
 
-},[signInError])
 const handleGoogleSignIn =()=>{
-    dispatch(signInWithGoogle());
+    dispatch(googleSignInStart());
 }
 
 const resetForm = ()=>{
@@ -49,7 +42,7 @@ const resetForm = ()=>{
 
 const handleSubmit =  e =>{
     e.preventDefault();
-    dispatch(signInUser({email,password}));
+    dispatch(emailSignInStart({email,password}));
   
     
 

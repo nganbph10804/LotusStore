@@ -5,41 +5,49 @@ import './style.scss';
 
 import {auth,handleUserProfile} from './../../firebase/ultils';
 import AuthWraper from '../AuthWraper';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import userTypes from '../../redux/User/user.types';
-import { resetAllForms, signInUser, signUpUser } from '../../redux/User/user.actions';
+import { resetAllForms, signInUser, signOutUserStart, signUpUser, signUpUserStart } from '../../redux/User/user.actions';
 
 
-const Signup = ({props}) => {
+const Signup = () => {
     
-    const signUpSucces = useSelector(state => state.user.signUpSucces);
-    const signUpError = useSelector(state => state.user.signUpError);
+    // const signUpSucces = useSelector(state => state.user.signUpSucces);
+    // const signUpError = useSelector(state => state.user.signUpError);
+    const currentUser = useSelector(state=>state.user.currentUser);
+    const userErr = useSelector(state=>state.user.userErr);
     const dispatch= useDispatch();
+
 
 const initialState='';
 const [displayName, setDisplayName] = useState(initialState);
 const [email, setEmail] = useState(initialState);
 const [password, setPassword] = useState(initialState);
 const [confirmPassword, setConfirmPassword] = useState(initialState);
-
+const history =useHistory();
 useEffect(()=>{
-    if(signUpSucces){
-        dispatch(resetAllForms());
+   
+    if(currentUser){
+        
     resetForm();
-    props.history.push('/');
+    history.push('/');
     
     }
 
 
-},[signUpSucces])
+},[currentUser])
 
 useEffect(()=>{
-    if( signUpError.length >0){
-        setErr(signUpError);
+    if(userErr.length>0){
+        
+    setErr(userErr);
+    
     }
 
-},[signUpError])
+
+},[userErr])
+
 
 const resetForm = ()=>{
     setPassword('');
@@ -50,7 +58,7 @@ const resetForm = ()=>{
 const [err,setErr] =useState([]);
 const handleSubmit =  event =>{
     event.preventDefault();
-    dispatch(signUpUser({displayName,email,password,confirmPassword}));
+    dispatch(signUpUserStart({displayName,email,password,confirmPassword}));
     
 
 
@@ -110,4 +118,4 @@ const configAuthWrapper={
     )
 }
 
-export default withRouter(Signup)
+export default Signup

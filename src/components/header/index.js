@@ -4,13 +4,17 @@ import logo from './../../asset/logo.png';
 import './style.scss';
 import { auth } from './../../firebase/ultils'
 import { Link, BrowserRouter } from 'react-router-dom';
-import { signOut } from '../../redux/User/user.actions';
+import { resetAllForms, signOut, signOutUserStart } from '../../redux/User/user.actions';
 const Header = () => {
     const currentUser = useSelector(state => state.user.currentUser);
     const dispatch = useDispatch();
 
-    const logout= ()=>{
-        dispatch(signOut());
+    // const logout= ()=>{
+    //     dispatch(signOut());
+    // }
+    const sagaSignOut =()=>{
+        dispatch(signOutUserStart());
+        
     }
     const unLoged = () => (
 
@@ -31,7 +35,7 @@ const Header = () => {
                 <Link to="/dashboard"><span>My Account</span></Link>
             </div>
             <div className="registration">
-                <span onClick={() => { logout() }}>Logout</span>
+                <span onClick={() => {sagaSignOut() }}>Logout</span>
             </div>
         </>
     );
@@ -44,8 +48,7 @@ const Header = () => {
                 <div className="title">
                     <Link to="/"> <h2>LOTUS STORE</h2></Link>
                 </div>
-                {!currentUser ? unLoged() : Loged()}
-                {/* {unLoged()} */}
+                {!currentUser ? unLoged() : Loged()}       
 
             </div>
         </header>

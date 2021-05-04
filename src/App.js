@@ -4,7 +4,7 @@ import Header from './components/header';
 import Homepage from './pages/Homepage';
 import Registration from './pages/Registration';
 import {auth, handleUserProfile} from './firebase/ultils';
-import {setCurrentUser} from './redux/User/user.actions';
+import {checkUserSession} from './redux/User/user.actions';
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,29 +26,12 @@ import Dashboard from './pages/Dashboard';
 
 
 const App = ()=>  {
-  const  currentUser =  useSelector(state=>state.user.currentUser);
+  // const  currentUser =  useSelector(state=>state.user.currentUser);
   const dispatch = useDispatch();
- 
-  useEffect(() => {
-    const authListener = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await handleUserProfile(userAuth);
-        userRef.onSnapshot(snapshot => {
-        dispatch( setCurrentUser({
-            id: snapshot.id,
-            ...snapshot.data()
-          }));
-        
-        })
-      }
-
-      setCurrentUser(userAuth);
-    });
-
-    return () => {
-      authListener();
-    };
-  }, []);
+ useEffect(()=>{
+   dispatch(checkUserSession());
+ },[])
+  
   return (
     <Router>
     <div className="App"> 
@@ -69,12 +52,12 @@ const App = ()=>  {
         <Route exact path="/recovery" >
          <ForgotPsw />
           </Route>
-          <Route exact path="/registration" render={()=> currentUser ? <Redirect to="/"/>:(
+          <Route exact path="/registration" render={()=>(
             <Registration/>
           )}/>
           
          
-          <Route exact path="/login" render={()=>  currentUser? <Redirect to="/"/>:(
+          <Route exact path="/login" render={()=> (
               <Login/>
           )}/>
             

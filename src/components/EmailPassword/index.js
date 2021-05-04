@@ -6,12 +6,14 @@ import './style.scss';
 import { auth } from './../../firebase/ultils';
 import { withRouter, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetAllForms, resetPassword } from '../../redux/User/user.actions';
+import { resetAllForms, resetPassword, resetPasswordStart, resetUserState } from '../../redux/User/user.actions';
 
-const EmailPassword = ({ props }) => {
+const EmailPassword = () => {
     
-    const resetPasswordSuccess = useSelector(state=>state.user.resetPasswordSuccess);
-    const resetPasswordError = useSelector(state => state.user.resetPasswordError);
+    // const resetPasswordSuccess = useSelector(state=>state.user.resetPasswordSuccess);
+    // const resetPasswordError = useSelector(state => state.user.resetPasswordError);
+     const resetPasswordSuccess = useSelector(state=>state.user.resetPasswordSuccess);
+    const userErr = useSelector(state => state.user.userErr);
     const dispatch= useDispatch();
 
 
@@ -25,23 +27,23 @@ const EmailPassword = ({ props }) => {
     let history = useHistory();
     useEffect(() => {
         if(resetPasswordSuccess){
-            dispatch(resetAllForms());
+            dispatch(resetUserState());
             setEmail('');
-            history.push('/');
+            history.push('/login');
             setErr([]);
         }
         
     }, [resetPasswordSuccess])
     useEffect(() => {
-        if(resetPasswordError){
-            setErr(resetPasswordError);
+        if(userErr){
+            setErr(userErr);
         }
         
-    }, [resetPasswordError])
+    }, [userErr])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(resetPassword({email}));
+        dispatch(resetPasswordStart({email}));
 
        
 

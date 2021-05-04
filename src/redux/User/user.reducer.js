@@ -1,74 +1,40 @@
+
+import { retry } from '@redux-saga/core/effects';
 import userTypes from './user.types';
 
 
 const INITIAL_STATE = {
     currentUser: null,
-    singnInSuccess: false,
-    signInError: [],
-    signUpError: [],
-    signUpSuccess: false,
-    resetPasswordSuccess: false,
-    resetPasswordError: []
+    resetPasswordSuccess:false,
+    userErr :[]
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case userTypes.SET_CURRENT_USER:
-            return {
-                ...state,
-                currentUser: action.payload
-            }
-
         case userTypes.SIGN_IN_SUCCESS:
-            return {
+            return{
                 ...state,
-                singnInSuccess: action.payload
+                currentUser : action.payload,
+                userErr: []
             }
-
-        case userTypes.SIGN_UP_SUCCESS:
-            return {
-                ...state,
-                signUpSuccess: action.payload
-
-            }
-
-        case userTypes.SIGN_IN_ERROR:
-            return {
-                ...state,
-                signInError: action.payload
-            }
-
-        case userTypes.SIGN_UP_ERROR:
-            return {
-                ...state,
-                signUpError: action.payload
-            }
-
-        case userTypes.RESET_PASSWORD_SUCCESS:
-            return {
+           
+        
+        case userTypes.RESET_PASSWORD_DONE:
+            return{
                 ...state,
                 resetPasswordSuccess: action.payload
             }
-
-        case userTypes.RESET_PASSWORD_ERROR:
-            return {
+        case userTypes.USER_ERROR:
+            return{
                 ...state,
-                resetPasswordError: action.payload
+                userErr :action.payload
             }
-
-        case userTypes.RESET_AUTH_USER:
-            return {
-                ...state,
-                singnInSuccess: false,
-                signInError: [],
-                signUpError: [],
-                signUpSuccess: false,
-                resetPasswordSuccess: false,
-                resetPasswordError: []
-
-            }
-
-
+            case userTypes.RESET_USER_STATE:
+                case userTypes.SIGN_OUT_USER_SUCCESS:
+                  return{
+                      ...state,
+                      ...INITIAL_STATE
+                  }
 
         default:
             return state;
