@@ -1,0 +1,74 @@
+import { React, useState,useEffect} from 'react'
+import AuthWraper from '../AuthWraper';
+import Button from '../Forms/Button';
+import FormInput from '../Forms/Forminput';
+import './style.scss';
+import { auth } from './../../firebase/ultils';
+import { withRouter, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetAllForms, resetPassword } from '../../redux/User/user.actions';
+
+const EmailPassword = ({ props }) => {
+    
+    const resetPasswordSuccess = useSelector(state=>state.user.resetPasswordSuccess);
+    const resetPasswordError = useSelector(state => state.user.resetPasswordError);
+    const dispatch= useDispatch();
+
+
+    const configAuthWrapper = {
+        headline: 'Email Password'
+    }
+    const [email, setEmail] = useState('');
+    const [err, setErr] = useState('');
+
+
+    let history = useHistory();
+    useEffect(() => {
+        if(resetPasswordSuccess){
+            dispatch(resetAllForms());
+            setEmail('');
+            history.push('/');
+            setErr([]);
+        }
+        
+    }, [resetPasswordSuccess])
+    useEffect(() => {
+        if(resetPasswordError){
+            setErr(resetPasswordError);
+        }
+        
+    }, [resetPasswordError])
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        dispatch(resetPassword({email}));
+
+       
+
+    }
+
+
+    return (
+        <AuthWraper {...configAuthWrapper}>
+            <div className="formWrap">
+                {err ? err : ''}
+                <form onSubmit={handleSubmit}>
+                    <FormInput
+                        type="email"
+                        name="email"
+                        value={email}
+                        placeholder="Email"
+                        handleChange={e => setEmail(e.target.value)}
+                    />
+                    <Button type="submit">
+                        Submit
+                </Button>
+
+                </form>
+            </div>
+
+        </AuthWraper>
+    )
+}
+
+export default EmailPassword
