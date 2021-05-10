@@ -25,6 +25,7 @@ import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
 import WithAdminAuth from './hoc/withAdminAuth';
 import AdminToolbar from './components/AdminToolbar';
+import AdminLayout from './AdminLayout/AdminLayout';
 
 
 
@@ -67,7 +68,9 @@ const App = ()=>  {
         <Switch>
         <Route exact path="/admin" >
           <WithAdminAuth>
+          <AdminLayout>
           <Admin />
+          </AdminLayout>
           </WithAdminAuth>
           </Route>
         <Route exact path="/dashboard" >
