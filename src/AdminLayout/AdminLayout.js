@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signOut } from './../redux/User/user.actions';
+import './style.scss'
 
 
 import VerticalNav from '../components/VerticalNAV';
@@ -25,10 +26,10 @@ const AdminLayout = props => {
                   Home
                 </Link>
               </li>
-              <li>
-                <span className="signOut" onClick={() => signOutt()}>
+              <li style={{marginTop:'10px'}}>
+                <a><span className="signOut" onClick={() => signOutt()}>
                   Sign Out
-                </span>
+                </span></a>
               </li>
             </ul>
           </VerticalNav>

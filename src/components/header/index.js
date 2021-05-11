@@ -44,6 +44,16 @@ const Header = () => {
                 <div className="title">
                     <Link to="/"> <h2>LOTUS STORE</h2></Link>
                 </div>
+                <nav>
+                    <ul>
+                        <li>
+                            <Link  to="search">
+                                Search
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
+
                 {!currentUser ? unLoged() : Loged()}
                 {/* {unLoged()} */}
 

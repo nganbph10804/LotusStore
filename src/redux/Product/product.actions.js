@@ -29,11 +29,11 @@ export const addProductStart =({
   }
 };
 
-export const fetchProductStart =()=> async dispatch =>{
+export const fetchProductStart =(filters={})=> async dispatch =>{
 
     try {
         
-        const products = await handleFetchProduct();
+        const products = await handleFetchProduct(filters);
 
         dispatch({
             type : ProductTypes.SET_PRODUCT,

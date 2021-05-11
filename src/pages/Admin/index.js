@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/Forms/Button';
 import FormInput from '../../components/Forms/Forminput';
 import FormSelect from '../../components/Forms/FormSelect';
+import LoadMore from '../../components/LoadMore';
 import Modal from '../../components/Modal';
 import { addProductStart, deleteProductStart, fetchProductStart } from '../../redux/Product/product.actions';
 import {firestore} from './../../firebase/ultils'
@@ -22,6 +23,7 @@ const Admin = props => {
 
 
   const lstProduct = useSelector(state=>state.product.products);
+  const {data,queryDoc,isLastPage} =lstProduct;
   const toggleModal = () => setHideModal(!hideModal);
 
   const configModal = {
@@ -40,6 +42,10 @@ const Admin = props => {
     }, 1500);
     
   }
+  const [filter,setFilter] = useState({
+    filterType :'',
+    pageSize : 6
+  });
 
   useEffect(() => {
     // firestore.collection('products').get().then(snapshot => {
@@ -47,8 +53,8 @@ const Admin = props => {
      
     //   setProducts(snapshotData);
     // }); 
-    dispatch(fetchProductStart());
-  }, []);
+    dispatch(fetchProductStart(filter));
+  }, [filter]);
 
   const onDeleteProduct = id =>{
     dispatch(deleteProductStart(id))
@@ -88,6 +94,17 @@ const Admin = props => {
     // });
 
   };
+  const onClickLoadMore = ()=>{
+  
+    dispatch(
+      fetchProductStart({ filterType:''  ,startAfterDoc: queryDoc
+      ,persistProducts : data
+      })
+  )
+  }
+  const configLoadMore = {
+    onLoadMoreEvt : onClickLoadMore
+  }
   return (
     <div className="admin">
 
@@ -171,7 +188,7 @@ const Admin = props => {
                       <td>
                           <table className="result" border ="0" cellPadding="10" cellSpacing="0">
                               <tbody>
-                                  {lstProduct.map((product, index)=>{
+                                  {data?.map((product, index)=>{
                                     const {
                                       productName,
                                       productThumbnail,
@@ -196,6 +213,14 @@ const Admin = props => {
 
                                     )
                                   })}
+                                  <tr>
+                                    <td>
+                                      {!isLastPage && (
+                                        <LoadMore {...configLoadMore} />
+                                      )}
+                                    </td>
+                                  </tr>
+                                 
                               </tbody>
                           </table>
                       </td>

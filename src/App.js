@@ -26,6 +26,7 @@ import Admin from './pages/Admin';
 import WithAdminAuth from './hoc/withAdminAuth';
 import AdminToolbar from './components/AdminToolbar';
 import AdminLayout from './AdminLayout/AdminLayout';
+import Search from './pages/Search';
 
 
 
@@ -66,32 +67,38 @@ const App = ()=>  {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-        <Route exact path="/admin" >
+        <Route  path="/search/:filterType" >
+         <Search />
+          </Route>
+        <Route exact path="/search" >
+         <Search />
+          </Route>
+        <Route path="/admin" >
           <WithAdminAuth>
           <AdminLayout>
           <Admin />
           </AdminLayout>
           </WithAdminAuth>
           </Route>
-        <Route exact path="/dashboard" >
+        <Route  path="/dashboard" >
          <WithAuth>
          <Dashboard/>
          </WithAuth>
           </Route>
-        <Route exact path="/recovery" >
+        <Route  path="/recovery" >
          <ForgotPsw />
           </Route>
-          <Route exact path="/registration" render={()=> currentUser ? <Redirect to="/"/>:(
+          <Route  path="/registration" render={()=> currentUser ? <Redirect to="/"/>:(
             <Registration/>
           )}/>
           
          
-          <Route exact path="/login" render={()=>  currentUser? <Redirect to="/"/>:(
+          <Route  path="/login" render={()=>  currentUser? <Redirect to="/"/>:(
               <Login/>
           )}/>
             
          
-          <Route exact path="/users">
+          <Route  path="/users">
             {/* <Users /> */}
           </Route>
           <Route exact path="/">
