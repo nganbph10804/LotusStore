@@ -1,13 +1,14 @@
 import ProductTypes from './product.types'
 import {auth} from './../../firebase/ultils'
-import { handleAddProduct, handleDeleteProduct, handleFetchProduct } from './product.helper';
+import { handleAddProduct, handleDeleteProduct, handleFetchAProduct, handleFetchProduct } from './product.helper';
 import userTypes from '../User/user.types';
 
 export const addProductStart =({
     productCategory,
     productName,
     productThumbnail,
-    productPrice   
+    productPrice,
+    productDesc   
 }) => async dispatch =>{
 
   try {
@@ -19,6 +20,7 @@ export const addProductStart =({
         productName,
         productThumbnail,
         productPrice,
+        productDesc,
         productAdminUID: auth.currentUser.uid,
         createdDate :timeStamp
       });
@@ -58,3 +60,15 @@ export const deleteProductStart = documentID => async dispatch=>{
   }
 }
 
+export const fetchAProductStart = ( id )=> async dispatch =>{
+      try {
+        const product = await handleFetchAProduct(id);
+         dispatch({
+           type : ProductTypes.SET_APRODUCT,
+           payload :product
+         })
+        
+      } catch (error) {
+        console.log(error);
+      }
+}

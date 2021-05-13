@@ -7,6 +7,7 @@ import LoadMore from '../../components/LoadMore';
 import Modal from '../../components/Modal';
 import { addProductStart, deleteProductStart, fetchProductStart } from '../../redux/Product/product.actions';
 import {firestore} from './../../firebase/ultils'
+import CKEditor from 'ckeditor4-react'
 import './style.scss';
 
 
@@ -26,6 +27,8 @@ const Admin = props => {
   const {data,queryDoc,isLastPage} =lstProduct;
   const toggleModal = () => setHideModal(!hideModal);
 
+  const [productDesc,setProductDesc] = useState('');
+
   const configModal = {
     hideModal,
     toggleModal
@@ -36,6 +39,7 @@ const Admin = props => {
     setProductName('');
     setProductThumbnail('');
     setProductPrice(0);
+    setProductDesc('');
     setErr(['add product Success!']);
     setTimeout(() => {
       setHideModal(true);
@@ -74,7 +78,8 @@ const Admin = props => {
           productCategory,
           productName,
           productThumbnail,
-          productPrice
+          productPrice,
+          productDesc
         })
     );
 
@@ -165,6 +170,11 @@ const Admin = props => {
               value={productPrice}
               handleChange={e => setProductPrice(e.target.value)}
             />
+
+            <CKEditor
+            onChange={evt => setProductDesc(evt.editor.getData())}
+            />
+            <br/>
 
             <Button type="submit">
               Add product

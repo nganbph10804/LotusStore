@@ -27,6 +27,8 @@ import WithAdminAuth from './hoc/withAdminAuth';
 import AdminToolbar from './components/AdminToolbar';
 import AdminLayout from './AdminLayout/AdminLayout';
 import Search from './pages/Search';
+import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
 
 
 
@@ -67,6 +69,12 @@ const App = ()=>  {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
+        <Route  path="/cart" >
+         <Cart />
+          </Route>
+        <Route  path="/product/:productID" >
+         <ProductDetails />
+          </Route>
         <Route  path="/search/:filterType" >
          <Search />
           </Route>

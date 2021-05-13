@@ -85,18 +85,23 @@ const ProductResult = () => {
             {data.map((product,pos)=>{
                 const {productName,
                     productThumbnail,
-                    productPrice} = product;
+                    productPrice,
+                    documentID,
+                    
+                } = product;
                 if (!productName || !productThumbnail ||
                    typeof productPrice == 'undefined') return null;
 
                     const configProduct ={
                         productName,
                     productThumbnail,
-                    productPrice
+                    productPrice,
+                    documentID,
+                    pos
                     }
                 return(
                    
-                        <Product {...configProduct}/>
+                        <Product {...configProduct} key={pos}/>
                  
                 )
             })}

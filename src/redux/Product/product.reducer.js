@@ -4,7 +4,8 @@ import ProductTypes from './product.types';
 
 const INITIAL_STATE ={
     productData :null,
-    products: []
+    products: [],
+    product : {}
 }
 
 const productReducer = (state=INITIAL_STATE,action ) => {
@@ -19,6 +20,11 @@ const productReducer = (state=INITIAL_STATE,action ) => {
                         return{
                             ...state,
                             products: action.payload
+                        }
+                    case ProductTypes.SET_APRODUCT :
+                        return{
+                            ...state,
+                            product : action.payload
                         }
                                
                         

@@ -58,25 +58,33 @@
           width: 100%;
           list-style-type: none;
           text-align: left;
+
+         
           
   
           .name {
+           
+            
             font-size: 3.2rem;
             line-height: 1.2;
             font-weight: 400;
           }
   
-          .price {
-            font-size: 1.6rem;
-            line-height: 1;
-            font-weight: 400;
-          }
+          
   
-          .addToCart {
-           
-          }
+         
         }
       }
   
     }
+  }
+  a{
+    color: black;
+  }
+  .price {
+    
+    color: red;
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 400;
   }

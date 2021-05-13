@@ -12,7 +12,7 @@ const AdminToolbar = ({props}) => {
         <div className="adminToolbar">
             <ul>
                 <li>
-                    <Link to='admin'>
+                    <Link to='/admin'>
                         My Admin
                     </Link>
 
