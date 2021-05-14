@@ -1,6 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { removeCartItem,addToCartStart, reducerCartItem } from '../../../redux/Cart/cart.actions';
+import deleteIcon from './../../../asset/trash.png'
+import plusIcon from  './../../../asset/add.png'
+import minusIcon from  './../../../asset/minus.png'
 
 const Item = (product) => {
     const dispatch = useDispatch();
@@ -35,16 +38,20 @@ const Item = (product) => {
                         {productName}
                     </td>
                     <td>
-                        <span className="removeBtn" onClick={()=>handleReduceProduct(product)} >{`< `}</span>
+                        <span className="removeBtn" onClick={()=>handleReduceProduct(product)} >
+                        <img style={{width:'10%',display:'inline' ,margin:'5px 10px 0 0'}} src={minusIcon}/>
+                            </span>
                        <span>{quantity}</span>
-                       <span className="removeBtn" onClick={()=>handleAddProduct(product)}>{` >`}</span>
+                       <span className="removeBtn" onClick={()=>handleAddProduct(product)}>
+                       <img style={{width:'10%',display:'inline',margin:'5px 0 0 10px'}} src={plusIcon}/>
+                           </span>
                     </td>
                     <td>
                         $ {productPrice}
                     </td>
                     <td align="center">
                         <span className="removeBtn" onClick={()=>handleRemoveCartItem(product)}>
-                            x
+                            <img style={{width:'25%'}} src={deleteIcon}/>
                         </span>
                     </td>
                 </tr>

@@ -3,7 +3,6 @@
 }
 .header{
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
-    padding: 5px;
 
     .wrap{
         overflow: hidden;
@@ -13,7 +12,7 @@
     } 
     .logo{ 
         position: absolute;
-         left: 190px; padding-top: 7.5rem;
+         left: 250px; padding-top: 7.0rem;
         -webkit-transform: translateY(-50%);
         -moz-transform: translateY(-50%);
         transform: translateY(-50%);
@@ -27,10 +26,10 @@
     }
     .title{
        float: left;
+      margin-left: 10px;
          
     }
     nav{
-        // max-width: 500px;
         float: right;
         ul, ul li{
                     display: inline-flex;    
@@ -62,6 +61,11 @@
 
 }
 
+.img-cart{
+  width: 40%;
+}
+
+
 @media screen and (max-width: 500px) {
     .home .logo .title {
       float: none;
@@ -72,9 +76,6 @@
     nav{
       float: none;
     }
-  }
-  .dropdown{
-  
   }
 .dropbtn {
     background-color: #4CAF50;

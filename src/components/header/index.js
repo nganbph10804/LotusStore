@@ -6,6 +6,8 @@ import { auth } from './../../firebase/ultils'
 import { Link, BrowserRouter } from 'react-router-dom';
 import { signOut } from '../../redux/User/user.actions';
 import { selectCartItemsCount } from './../../redux/Cart/cart.selectors'
+import cartIcon  from './../../asset/shopping-cart.png'
+import userIcon from './../../asset/user.png'
 
 const mapState = (state) => ({
     totalNumCartItems: selectCartItemsCount(state)
@@ -23,7 +25,7 @@ const Header = () => {
     const unLoged = () => (
 
         <ul>
-            <li>
+            <li className="search">
                 <Link to="/search">
                     <span>Search</span>
                 </Link>
@@ -36,30 +38,33 @@ const Header = () => {
                 <Link to="/login"><span>Login</span></Link>
             </li>
             <li>
-                <Link to="/cart" >cart {totalNumCartItems}</Link>
+            <Link to="/cart" >
+                   <img className="img-cart" src={cartIcon}/><span style={{color:"red"}}>({totalNumCartItems})</span>
+                </Link>
             </li>
         </ul>
 
     );
     const Loged = () => (
         <ul>
-            <li>
+            <li style={{paddingTop: '25px'}}>
                 <Link to="/search">
                     <span>Search</span>
                 </Link>
             </li>
             <li>
-                <Link to="/cart" >
-                    cart {totalNumCartItems}
+            <Link to="/cart" >
+                   <img className="img-cart" src={cartIcon}/><span style={{color:"red", fontSize:'20px'}}>({totalNumCartItems})</span>
                 </Link>
             </li>
-            {/* <li className="dashboard">
-                <Link to="/dashboard"><span>My Account</span></Link>
+            <li className="dashboard">
+                <Link to="/dashboard"><img className="img-user" src={userIcon}/> <span style={{fontSize: '15px'}} onClick={()=>logout()}>(Logout)</span>
+                </Link>
             </li>
-            <li className="logout">
+            {/* <li className="logout">
                 <span onClick={() => { logout() }}>Logout</span>
             </li> */}
-            <li class="dropdown">
+            {/* <li class="dropdown">
                 <button class="dropbtn">
                     dropdown
                 </button>
@@ -67,7 +72,7 @@ const Header = () => {
                     <a href="/dashboard"><Link to="/dashboard">My Account</Link></a>
                     <a href="" onClick={() => { logout() }}>Logout</a>   
                 </div>
-            </li>
+            </li> */}
         </ul>
     );
     return (
