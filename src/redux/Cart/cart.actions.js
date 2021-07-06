@@ -32,3 +32,9 @@ export const removeCartItem =(cartItem ) => async dispatch =>{
             console.log(error);
      }
  }
+
+ export const clearCart = () => async dispatch=>{
+            dispatch({
+                type: CartTypes.CLEAR_CART
+            })
+ }

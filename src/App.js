@@ -29,6 +29,8 @@ import AdminLayout from './AdminLayout/AdminLayout';
 import Search from './pages/Search';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
+import Payment from './pages/Payment'
+import Order from './pages/Order';
 
 
 
@@ -78,6 +80,11 @@ const App = ()=>  {
         <Route  path="/search/:filterType" >
          <Search />
           </Route>
+          <Route  path="/order/:orderID" >
+          <WithAuth>
+          <Order/>
+          </WithAuth>
+          </Route>
         <Route exact path="/search" >
          <Search />
           </Route>
@@ -87,6 +94,11 @@ const App = ()=>  {
           <Admin />
           </AdminLayout>
           </WithAdminAuth>
+          </Route>
+          <Route path="/payment">
+            <WithAuth>
+            <Payment/>
+            </WithAuth>
           </Route>
         <Route  path="/dashboard" >
          <WithAuth>
@@ -113,8 +125,7 @@ const App = ()=>  {
             <Homepage />
           </Route>
         </Switch>
-      
-      
+            
      </div>
      <Footer/>
     </div>

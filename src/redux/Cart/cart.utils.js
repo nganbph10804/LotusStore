@@ -3,7 +3,7 @@ export const existingCartItem =({
     nextCartItem
 }) =>{
     return prevCartItems.find(
-        cartItem => cartItem.documentID == nextCartItem.documentID
+        cartItem => cartItem.documentID === nextCartItem.documentID
     );
 }
 
@@ -15,7 +15,7 @@ export const handleAddToCart= ({
     const cartItemExists = existingCartItem({prevCartItems,nextCartItem});
     if(cartItemExists){
         return prevCartItems.map(cartItem => 
-            cartItem.documentID == nextCartItem.documentID
+            cartItem.documentID === nextCartItem.documentID
            ?{
                ...cartItem,
                quantity :cartItem.quantity + quantityIncrement
