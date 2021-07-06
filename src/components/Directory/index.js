@@ -1,8 +1,10 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 import shopmen from './../../asset/shopmen.jpg';
 import shopwomen from './../../asset/shopwomen.jpg';
 import './style.scss';
 export const Directory = () => {
+    const history= useHistory();
     return (
         <div className="directory">
             <div className="wrap"> 
@@ -11,7 +13,7 @@ export const Directory = () => {
             style={{
                 backgroundImage: `url(${shopwomen})`
             }}>
-                <a>Shop Womens</a>
+                <a onClick={()=>history.push(`/search/womens`)}>Shop Womens</a>
             </div>
 
             <div 
@@ -19,7 +21,7 @@ export const Directory = () => {
             style={{
                 backgroundImage: `url(${shopmen})`
             }}>
-                <a>Shop Mens</a>
+                <a onClick={()=>history.push(`/search/mens`)}>Shop Mens</a>
             </div>
             </div>
         </div>
