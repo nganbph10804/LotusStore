@@ -19,6 +19,10 @@ const orderReducer =(state=INITIAL_STATE,action)=>{
                     ...state,
                     orderDetails:action.payload
                 }
+                case ordersTypes.RESET_ORDER_DETAILS:
+                    return{
+                        state
+                    }
         
             default:
                 return state;

@@ -34,9 +34,21 @@ export const fetchUserOrderHistory= (uid)=> async dispatch=>{
 export const getOrderDetails= (orderID)=> async dispatch=>{
     try {
         const orderDetails = await handleGetOrderDetail(orderID);
+        console.log(orderDetails);
         dispatch({
             type:ordersTypes.SET_ORDER_DETAILS,
             payload:orderDetails
+        })
+       
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const clearDataOrderDetails= (orderID)=>  dispatch=>{
+    try {
+        dispatch({
+            type:ordersTypes.RESET_ORDER_DETAILS,
+            
         })
        
     } catch (error) {

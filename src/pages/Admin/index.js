@@ -1,4 +1,5 @@
-import React, { useState ,useEffect} from 'react';
+import CKEditor from 'ckeditor4-react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/Forms/Button';
 import FormInput from '../../components/Forms/Forminput';
@@ -6,15 +7,12 @@ import FormSelect from '../../components/Forms/FormSelect';
 import LoadMore from '../../components/LoadMore';
 import Modal from '../../components/Modal';
 import { addProductStart, deleteProductStart, fetchProductStart } from '../../redux/Product/product.actions';
-import {firestore} from './../../firebase/ultils'
-import CKEditor from 'ckeditor4-react'
 import './style.scss';
 
 
 
 const Admin = props => {
   const dispatch = useDispatch();
-  const [products, setProducts] = useState([]);
   const [hideModal, setHideModal] = useState(true);
   const [productCategory, setProductCategory] = useState('mens');
   const [productName, setProductName] = useState('');
@@ -52,11 +50,7 @@ const Admin = props => {
   });
 
   useEffect(() => {
-    // firestore.collection('products').get().then(snapshot => {
-    //   const snapshotData = snapshot.docs.map(doc => doc.data());
-     
-    //   setProducts(snapshotData);
-    // }); 
+   
     dispatch(fetchProductStart(filter));
   }, [filter]);
 

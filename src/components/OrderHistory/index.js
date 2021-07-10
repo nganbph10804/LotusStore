@@ -60,7 +60,7 @@ const OrderHistory = ({ orders }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.length==0?<h1>Opps! you have nothing! </h1>: data.map((row, pos) => {
+                    {data && data !== 'null' && data !== 'undefined'? data.map((row, pos) => {
                         const {documentID}=row;
                         return (
                             <TableRow 
@@ -83,7 +83,7 @@ const OrderHistory = ({ orders }) => {
                                 })}
                             </TableRow>
                         )
-                    })}
+                    }):<h1>Opps! you have nothing! </h1>}
                 </TableBody>
             </Table>
 

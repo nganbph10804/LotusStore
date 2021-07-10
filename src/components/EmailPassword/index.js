@@ -1,12 +1,11 @@
-import { React, useState,useEffect} from 'react'
+import { React, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { resetAllForms, resetPassword } from '../../redux/User/user.actions';
 import AuthWraper from '../AuthWraper';
 import Button from '../Forms/Button';
 import FormInput from '../Forms/Forminput';
 import './style.scss';
-import { auth } from './../../firebase/ultils';
-import { withRouter, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { resetAllForms, resetPassword } from '../../redux/User/user.actions';
 
 const EmailPassword = ({ props }) => {
     

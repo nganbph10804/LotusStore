@@ -1,4 +1,4 @@
-import React from 'react'
+
 import ProductTypes from './product.types';
 
 

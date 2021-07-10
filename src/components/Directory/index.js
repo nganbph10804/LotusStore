@@ -7,7 +7,6 @@ export const Directory = () => {
     const history= useHistory();
     return (
         <div className="directory">
-            <div className="wrap"> 
             <div 
             className='item'
             style={{
@@ -23,7 +22,7 @@ export const Directory = () => {
             }}>
                 <a onClick={()=>history.push(`/search/mens`)}>Shop Mens</a>
             </div>
-            </div>
+          
         </div>
     )
 }

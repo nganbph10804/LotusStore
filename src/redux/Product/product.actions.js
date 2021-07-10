@@ -1,7 +1,6 @@
 import ProductTypes from './product.types'
 import {auth} from './../../firebase/ultils'
 import { handleAddProduct, handleDeleteProduct, handleFetchAProduct, handleFetchProduct } from './product.helper';
-import userTypes from '../User/user.types';
 
 export const addProductStart =({
     productCategory,

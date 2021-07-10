@@ -45,7 +45,7 @@ a, a:hover {
    height: calc(100% - 6.5rem);
    max-width: 1450px;
    padding: 0 10px;
-   margin: 0 auto;
+   margin: 120px auto 0 auto;
 }
   
   .controlPanel {
@@ -75,4 +75,9 @@ a, a:hover {
   .adminLayout {
     height: calc(100% - 5.5rem );
   }
+  .homepage{
+     display: flex;
+     
+  }
+  
   

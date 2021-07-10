@@ -1,36 +1,31 @@
-import  { React,useState,useEffect } from 'react';
-import './default.scss';
-import Header from './components/header';
-import Homepage from './pages/Homepage';
-import Registration from './pages/Registration';
-import {auth, handleUserProfile} from './firebase/ultils';
-import {setCurrentUser} from './redux/User/user.actions';
+import { React, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  Link,
-  withRouter
+  BrowserRouter as Router, Redirect, Route, Switch
 } from "react-router-dom";
+import AdminLayout from './AdminLayout/AdminLayout';
+import AdminToolbar from './components/AdminToolbar';
+import Footer from './components/Footer';
+import Header from './components/header';
+import './default.scss';
+import { auth, handleUserProfile } from './firebase/ultils';
+import WithAdminAuth from './hoc/withAdminAuth';
 // hoc
 import WithAuth from './hoc/WithAuth';
-
-
-import Footer from './components/Footer';
-import Login from './pages/Login';
-import ForgotPsw from './pages/Recovery';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
-import WithAdminAuth from './hoc/withAdminAuth';
-import AdminToolbar from './components/AdminToolbar';
-import AdminLayout from './AdminLayout/AdminLayout';
-import Search from './pages/Search';
-import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
-import Payment from './pages/Payment'
+import Dashboard from './pages/Dashboard';
+import Homepage from './pages/Homepage';
+import Login from './pages/Login';
 import Order from './pages/Order';
+import Payment from './pages/Payment';
+import ProductDetails from './pages/ProductDetails';
+import ForgotPsw from './pages/Recovery';
+import Registration from './pages/Registration';
+import Search from './pages/Search';
+import { setCurrentUser } from './redux/User/user.actions';
+
+
 
 
 

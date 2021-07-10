@@ -46,19 +46,19 @@ export const handleGetOrderHistory= uid =>{
 
 export const handleGetOrderDetail = orderID=>{
     return new Promise((resolve,reject)=>{
-        firestore.collection('orders')
-                .doc(orderID)
-                .get()
-                .then(snap=>{
-                    if(snap.exists){
-                        resolve({
-                            ...snap.data(),
-                            documentID:orderID
-                        })
-                    }
-                })
-                .catch(err=>{
-                    reject(err);
-                })
+        firestore
+        .collection('orders')
+        .doc(orderID)
+        .get()
+        .then(snapshot => {
+            if(snapshot.exists){
+                resolve(
+                    snapshot.data()
+                );
+            }
+        })
+        .catch( err =>{
+            reject(err);
+        })
     })
 }

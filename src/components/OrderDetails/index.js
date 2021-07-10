@@ -40,9 +40,9 @@ const formatText=(columnName,columnValue)=>{
             return columnValue;
     }
 }
-const OrderDetail = ({ order }) => {
+const OrderDetail = ({ order}) => {
 
-    const orderItems = order && order.orderItems;
+    const {orderItems} =order;
   
     return (
         <TableContainer>
@@ -61,7 +61,7 @@ const OrderDetail = ({ order }) => {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {orderItems.map((row, pos) => {
+                {orderItems&&orderItems.map((row, pos) => {
                     return (
                         <TableRow
                             key={pos}

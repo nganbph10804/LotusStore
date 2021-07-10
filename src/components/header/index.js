@@ -1,13 +1,12 @@
 import React from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import logo from './../../asset/logo.png';
-import './style.scss';
-import { auth } from './../../firebase/ultils'
-import { Link, BrowserRouter } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { signOut } from '../../redux/User/user.actions';
-import { selectCartItemsCount } from './../../redux/Cart/cart.selectors'
-import cartIcon  from './../../asset/shopping-cart.png'
-import userIcon from './../../asset/user.png'
+import logo from './../../asset/logo.png';
+import cartIcon from './../../asset/shopping-cart.png';
+import userIcon from './../../asset/user.png';
+import { selectCartItemsCount } from './../../redux/Cart/cart.selectors';
+import './style.scss';
 
 const mapState = (state) => ({
     totalNumCartItems: selectCartItemsCount(state)
@@ -20,7 +19,13 @@ const Header = () => {
     const { totalNumCartItems } = useSelector(mapState);
 
     const logout = () => {
-        dispatch(signOut());
+        const cnf = window.confirm('Are you want to logout?');
+        if(cnf==false){
+            return;
+        }else{
+            dispatch(signOut());
+        }
+        
     }
     const unLoged = () => (
 
@@ -38,8 +43,8 @@ const Header = () => {
                 <Link to="/login"><span>Login</span></Link>
             </li>
             <li>
-            <Link to="/cart" >
-                   <img className="img-cart" src={cartIcon}/><span style={{color:"red"}}>({totalNumCartItems})</span>
+                <Link to="/cart" >
+                    <img className="img-cart" style={{width:'55%'}} src={cartIcon} /><span style={{ color: "red" }}>({totalNumCartItems})</span>
                 </Link>
             </li>
         </ul>
@@ -47,53 +52,39 @@ const Header = () => {
     );
     const Loged = () => (
         <ul>
-            <li style={{paddingTop: '25px'}}>
+            <li className="search" >
                 <Link to="/search">
                     <span>Search</span>
                 </Link>
             </li>
-            <li>
-            <Link to="/cart" >
-                   <img className="img-cart" src={cartIcon}/><span style={{color:"red", fontSize:'20px'}}>({totalNumCartItems})</span>
+            <li className="cart">
+                <Link to="/cart" >
+                    <img className="img-cart" style={{width:'40%'}} src={cartIcon} /><span >({totalNumCartItems})</span>
                 </Link>
             </li>
             <li className="dashboard">
-                <Link to="/dashboard"><img className="img-user" src={userIcon}/> <span style={{fontSize: '15px'}} onClick={()=>logout()}>(Logout)</span>
+                <Link to="/dashboard"><img style={{width:'60%'}} className="img-user" src={userIcon} /> 
                 </Link>
+               
             </li>
-            {/* <li className="logout">
-                <span onClick={() => { logout() }}>Logout</span>
-            </li> */}
-            {/* <li class="dropdown">
-                <button class="dropbtn">
-                    dropdown
-                </button>
-                <div class="dropdown-content">
-                    <a href="/dashboard"><Link to="/dashboard">My Account</Link></a>
-                    <a href="" onClick={() => { logout() }}>Logout</a>   
-                </div>
-            </li> */}
+            <li className="logout">
+            <span   onClick={() => logout()}>(Logout)</span>
+            </li>
         </ul>
     );
     return (
         <header className="header">
-            <div className="wrap">
-                <div className="home">
-                    <div className="logo">
-                        <Link to="/"> <img src={logo} alt="lotus Logo" /></Link>
-                    </div>
-                    <div className="title">
-                        <Link to="/"> <h2>LOTUS STORE</h2></Link>
-                    </div>
+            <div className="home">
+                <div className="logo">
+                    <Link to="/"> <img style={{width:'60%',height:'auto'}} src={logo} alt="lotus Logo" /></Link>
                 </div>
-                <nav>
-                    {!currentUser ? unLoged() : Loged()}
-                </nav>
-
-
-                {/* {unLoged()} */}
-
+                <div className="title">
+                    <Link to="/"> <h2>LOTUS STORE</h2></Link>
+                </div>
             </div>
+            <nav className="menu">
+                {!currentUser ? unLoged() : Loged()}
+            </nav>
         </header>
     )
 }

@@ -88,7 +88,7 @@ const PaymentDetails = () => {
             saveOrderHistory(configOrder)
         )
 
-
+        window.alert('Thank for your purchase!');
         dispatch(clearCart())
         
 
