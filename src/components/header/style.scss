@@ -12,6 +12,7 @@
 }
 
 .home{
+ 
  display: flex;
  .title{
    flex: 2;
@@ -26,7 +27,9 @@
  }
 }
 .menu{
+  
   ul{
+    padding: 0;
     display: flex;
     .logout{
       flex: 2;
@@ -55,11 +58,26 @@
      }
      span{
        padding: 1.5rem 0;
-       font-size: 2.2rem;
+       font-size: 2rem;
        font-weight: 500;
 
      } &:hover{
        cursor: pointer;
+     }
+     @media (min-width:500px) {
+       .header{
+         justify-content: space-around;
+       }
+       .logo{
+         a{
+           img{
+            position: relative;
+            margin-top: 2rem;
+           }
+         }
+       }
+       
+       
      }
      
      
