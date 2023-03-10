@@ -8,7 +8,7 @@ import AuthWraper from '../AuthWraper';
 import { withRouter } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import userTypes from '../../redux/User/user.types';
-import { resetAllForms, signInUser, signUpUser } from '../../redux/User/user.actions';
+import { signUpUser } from '../../redux/User/user.actions';
 
 
 const Signup = ({props}) => {
@@ -25,9 +25,8 @@ const [confirmPassword, setConfirmPassword] = useState(initialState);
 
 useEffect(()=>{
     if(signUpSucces){
-        dispatch(resetAllForms());
     resetForm();
-    // props.history.push('/');
+    props.history.push('/');
     
     }
 

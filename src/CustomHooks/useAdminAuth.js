@@ -3,12 +3,9 @@ import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {checkUserIsAdmin} from './../Utils';
 
-const mapState = ({user}) => ({
-    currentUser: user.currentUser
-});
 
 const useAdminAuth = props => {
-    const {currentUser} = useSelector(mapState);
+    const currentUser = useSelector(state => state.user.currentUser);
     const history = useHistory();
 
     useEffect(() => {

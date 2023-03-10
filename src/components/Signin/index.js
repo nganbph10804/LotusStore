@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { resetAllForms, signInUser, signInWithGoogle } from '../../redux/User/user.actions';
+import { signInUser, signInWithGoogle } from '../../redux/User/user.actions';
 import AuthWraper from '../AuthWraper';
 import Button from '../Forms/Button';
 import FormInput from './../Forms/Forminput';
@@ -20,7 +20,6 @@ const history = useHistory();
 
 useEffect(()=>{
         if(signInsuccess){
-            dispatch(resetAllForms());
        resetForm();
        history.push('/');
        
@@ -31,7 +30,7 @@ useEffect(()=>{
 
 useEffect(()=>{
 
-    if(signInError.length >0){
+    if(Array.isArray(signInError) && signInError.length >0){
         setErr(signInError);
     }
 

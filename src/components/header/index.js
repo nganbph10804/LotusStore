@@ -31,7 +31,7 @@ const Header = () => {
 
         <ul>
             <li className="search">
-                <Link to="/search">
+                <Link to="/admin">
                     <span>Search</span>
                 </Link>
             </li>
@@ -53,7 +53,7 @@ const Header = () => {
     const Loged = () => (
         <ul>
             <li className="search" >
-                <Link to="/search">
+                <Link to="/admin">
                     <span>Search</span>
                 </Link>
             </li>

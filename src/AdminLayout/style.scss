@@ -9,6 +9,12 @@ ul{
     
   
     .sidebar {
+        position: absolute;
+        top: 0; left: 0;
+        width: 25.0rem;
+        height: 100%;
+        z-index: 1;
+        border-right: 1px solid #d3d3d3;
       
       
     }
