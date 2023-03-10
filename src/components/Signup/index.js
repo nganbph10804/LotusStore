@@ -27,7 +27,7 @@ useEffect(()=>{
     if(signUpSucces){
         dispatch(resetAllForms());
     resetForm();
-    props.history.push('/');
+    // props.history.push('/');
     
     }
 

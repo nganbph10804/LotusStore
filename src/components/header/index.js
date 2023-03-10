@@ -76,10 +76,10 @@ const Header = () => {
         <header className="header">
             <div className="home">
                 <div className="logo">
-                    <Link to="/"> <img style={{width:'60%',height:'auto'}} src={logo} alt="lotus Logo" /></Link>
+                    <Link to="/"> <img style={{width:'100%',height:'auto', paddingBottom: '10px', paddingTop: '10px'}} src={logo} alt="lotus Logo" /></Link>
                 </div>
                 <div className="title">
-                    <Link to="/"> <h2>LOTUS STORE</h2></Link>
+                    <Link to="/"> <h2>HUST STORE</h2></Link>
                 </div>
             </div>
             <nav className="menu">

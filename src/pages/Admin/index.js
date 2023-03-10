@@ -1,240 +1,223 @@
-import CKEditor from 'ckeditor4-react';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '../../components/Forms/Button';
-import FormInput from '../../components/Forms/Forminput';
-import FormSelect from '../../components/Forms/FormSelect';
-import LoadMore from '../../components/LoadMore';
-import Modal from '../../components/Modal';
-import { addProductStart, deleteProductStart, fetchProductStart } from '../../redux/Product/product.actions';
+import { addProductStart, fetchProductStart , deleteProductStart } from './../../redux/Product/product.actions';
+import Modal from './../../components/Modal';
+import FormInput from './../../components/Forms/Forminput';
+import FormSelect from './../../components/Forms/FormSelect';
+import Button from './../../components/Forms/Button';
+import LoadMore from './../../components/LoadMore';
+import {CKEditor} from 'ckeditor4-react';
+
 import './style.scss';
 
 
-
 const Admin = props => {
-  const dispatch = useDispatch();
-  const [hideModal, setHideModal] = useState(true);
-  const [productCategory, setProductCategory] = useState('mens');
-  const [productName, setProductName] = useState('');
-  const [productThumbnail, setProductThumbnail] = useState('');
-  const [productPrice, setProductPrice] = useState(0);
-  const [err,setErr] = useState([]);
+    const dispatch = useDispatch();
+    const [hideModal, setHideModal] = useState(true);
+    const [productCategory, setProductCategory] = useState('mens');
+    const [productName, setProductName] = useState('');
+    const [productThumbnail, setProductThumbnail] = useState('');
+    const [productPrice, setProductPrice] = useState(0);
+    const [productDesc, setProductDesc] = useState('');
 
+    const lstProduct = useSelector(state=>state.product.products);
+    const {data,queryDoc,isLastPage} =lstProduct;
 
-  const lstProduct = useSelector(state=>state.product.products);
-  const {data,queryDoc,isLastPage} =lstProduct;
-  const toggleModal = () => setHideModal(!hideModal);
+    useEffect(() => {
+        dispatch(
+            fetchProductStart()
+        );
+    }, []);
 
-  const [productDesc,setProductDesc] = useState('');
+    const toggleModal = () => setHideModal(!hideModal);
 
-  const configModal = {
-    hideModal,
-    toggleModal
-  };
+    const configModal = {
+        hideModal,
+        toggleModal
+    };
 
-  const resetForm= ()=>{
-    setProductCategory('mens');
-    setProductName('');
-    setProductThumbnail('');
-    setProductPrice(0);
-    setProductDesc('');
-    setErr(['add product Success!']);
-    setTimeout(() => {
-      setHideModal(true);
-    }, 1500);
-    
-  }
-  const [filter,setFilter] = useState({
-    filterType :'',
-    pageSize : 6
-  });
+    const resetForm = () => {
+        setHideModal(true);
+        setProductCategory('mens');
+        setProductName('');
+        setProductThumbnail('');
+        setProductPrice(0);
+        setProductDesc('');
+    };
 
-  useEffect(() => {
-   
-    dispatch(fetchProductStart(filter));
-  }, [filter]);
+    const handleSubmit = e => {
+        e.preventDefault();
 
-  const onDeleteProduct = id =>{
-    dispatch(deleteProductStart(id))
-    dispatch(fetchProductStart())
-
-  }
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if(!productName||!productThumbnail||!productPrice) {
-      const er = ['Empty field! Try again!'];
-      setErr(er);
-  return;
-}
-    dispatch(
-        addProductStart({
-          productCategory,
-          productName,
-          productThumbnail,
-          productPrice,
-          productDesc
-        })
-    );
-
-
+        dispatch(
+            addProductStart({
+                productCategory,
+                productName,
+                productThumbnail,
+                productPrice,
+                productDesc,
+            })
+        );
         resetForm();
-        dispatch( fetchProductStart());
-        setTimeout(() => {
-            setErr([]);
-        }, 1500);
-    // firestore.collection('products').doc().set({
-    //   productCategory,
-    //   productName,
-    //   productThumbnail,
-    //   productPrice
-    // }).then(e => {
-    //   // Success
-    // });
 
-  };
-  const onClickLoadMore = ()=>{
-  
-    dispatch(
-      fetchProductStart({ filterType:''  ,startAfterDoc: queryDoc
-      ,persistProducts : data
-      })
-  )
-  }
-  const configLoadMore = {
-    onLoadMoreEvt : onClickLoadMore
-  }
-  return (
-    <div className="admin">
+    };
 
-<div className="callToActions">
-        <ul>
-          <li>
-            <Button onClick={() => toggleModal()}>
-              Add new product
-            </Button>
-          </li>
-         
-        </ul>
-      </div>
+    const handleLoadMore = () => {
+        dispatch(
+            fetchProductStart({
+                startAfterDoc: queryDoc,
+                persistProducts: data
+            })
+        );
+    };
 
-      <Modal {...configModal}>
-        <div className="addNewProductForm">
-          <form onSubmit={handleSubmit}>
-          {err?
-             (<span style={{color:'red',fontWeight:800}}>{err}</span>)
-             :''}
-            <h2>
-              Add new product
-            </h2>
-           
+    const configLoadMore = {
+        onLoadMoreEvt: handleLoadMore,
+    };
 
-            <FormSelect
-              label="Category"
-              options={[{
-                value: "mens",
-                name: "Mens"
-              }, {
-                value: "womens",
-                name: "Womens"
-              }]}
-              handleChange={e => setProductCategory(e.target.value)}
-            />
+    return (
+        <div className="admin">
 
-            <FormInput
-              label="Name"
-              type="text"
-              value={productName}
-              handleChange={e => setProductName(e.target.value)}
-            />
+            <div className="callToActions">
+                <ul>
+                    <li>
+                        <Button onClick={() => toggleModal()}>
+                            Add new product
+                        </Button>
+                    </li>
+                </ul>
+            </div>
 
-            <FormInput
-              label="Main image URL"
-              type="url"
-              value={productThumbnail}
-              handleChange={e => setProductThumbnail(e.target.value)}
-            />
+            <Modal {...configModal}>
+                <div className="addNewProductForm">
+                    <form onSubmit={handleSubmit}>
 
-            <FormInput
-              label="Price"
-              type="number"
-              min="0.00"
-              max="10000.00"
-              step="0.01"
-              value={productPrice}
-              handleChange={e => setProductPrice(e.target.value)}
-            />
+                        <h2>
+                            Add new product
+                        </h2>
 
-            <CKEditor
-            onChange={evt => setProductDesc(evt.editor.getData())}
-            />
-            <br/>
+                        <FormSelect
+                            label="Category"
+                            options={[{
+                                value: "mens",
+                                name: "Mens"
+                            }, {
+                                value: "womens",
+                                name: "Womens"
+                            }]}
+                            handleChange={e => setProductCategory(e.target.value)}
+                        />
 
-            <Button type="submit">
-              Add product
-            </Button>
+                        <FormInput
+                            label="Name"
+                            type="text"
+                            value={productName}
+                            handleChange={e => setProductName(e.target.value)}
+                        />
 
+                        <FormInput
+                            label="Main image URL"
+                            type="url"
+                            value={productThumbnail}
+                            handleChange={e => setProductThumbnail(e.target.value)}
+                        />
 
-          </form>
-        </div>
-      </Modal>
-            <div className="manageProduct">
-             <table border ="0" cellPadding="0" cellSpacing="0">
-                <tbody>
+                        <FormInput
+                            label="Price"
+                            type="number"
+                            min="0.00"
+                            max="10000.00"
+                            step="0.01"
+                            value={productPrice}
+                            handleChange={e => setProductPrice(e.target.value)}
+                        />
+
+                        <CKEditor
+                            onChange={evt => setProductDesc(evt.editor.getData())}
+                        />
+
+                        <br />
+
+                        <Button type="submit">
+                            Add product
+                        </Button>
+
+                    </form>
+                </div>
+            </Modal>
+
+            <div className="manageProducts">
+
+                <table border="0" cellPadding="0" cellSpacing="0">
+                    <tbody>
                     <tr>
                         <th>
-                            <h2>
-                             Manage Products
-                            </h2>
+                            <h1>
+                                Manage Products
+                            </h1>
                         </th>
                     </tr>
                     <tr>
-                      <td>
-                          <table className="result" border ="0" cellPadding="10" cellSpacing="0">
-                              <tbody>
-                                  {data?.map((product, index)=>{
+                        <td>
+                            <table className="results" border="0" cellPadding="10" cellSpacing="0">
+                                <tbody>
+                                {(Array.isArray(data) && data.length > 0) && data.map((product, index) => {
                                     const {
-                                      productName,
-                                      productThumbnail,
-                                      productPrice,
-                                      documentID
+                                        productName,
+                                        productThumbnail,
+                                        productPrice,
+                                        documentID
                                     } = product;
-                                    return(
-                                      <tr>
-                                        <td>
-                                          <img src={productThumbnail}/>
-                                        </td>
-                                        <td>
-                                          {productName}
-                                        </td>
-                                        <td>
-                                          ${productPrice}
-                                        </td>
-                                        <td>
-                                          <Button onClick={()=>onDeleteProduct(documentID)}>Delete</Button>
-                                        </td>
-                                      </tr>
 
+                                    return (
+                                        <tr key={index}>
+                                            <td>
+                                                <img className="thumb" src={productThumbnail} />
+                                            </td>
+                                            <td>
+                                                {productName}
+                                            </td>
+                                            <td>
+                                                £{productPrice}
+                                            </td>
+                                            <td>
+                                                <Button onClick={() => dispatch(deleteProductStart(documentID))}>
+                                                    Delete
+                                                </Button>
+                                            </td>
+                                        </tr>
                                     )
-                                  })}
-                                  <tr>
-                                    <td>
-                                      {!isLastPage && (
-                                        <LoadMore {...configLoadMore} />
-                                      )}
-                                    </td>
-                                  </tr>
-                                 
-                              </tbody>
-                          </table>
-                      </td>
+                                })}
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
-                </tbody>
-             </table>
+                    <tr>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table border="0" cellPadding="10" cellSpacing="0">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        {!isLastPage && (
+                                            <LoadMore {...configLoadMore} />
+                                        )}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
             </div>
-    </div>
-  );
+
+        </div>
+    );
 }
 
 export default Admin;

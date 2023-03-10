@@ -6,8 +6,8 @@ import {checkUserIsAdmin} from './../../Utils'
 
 const AdminToolbar = ({props}) => {
     const currentUser = useSelector(state=>state.user.currentUser);
-    const isAdmin = checkUserIsAdmin(currentUser); 
-    if(!isAdmin) return null;  
+    const isAdmin = checkUserIsAdmin(currentUser);
+    if(!isAdmin) return null;
     return (
         <div className="adminToolbar">
             <ul>

@@ -12,7 +12,7 @@ export const Directory = () => {
             style={{
                 backgroundImage: `url(${shopwomen})`
             }}>
-                <a onClick={()=>history.push(`/search/womens`)}>Shop Womens</a>
+                <a onClick={()=>history.push(`/search/womens`)}>Đồ Nữ</a>
             </div>
 
             <div 
@@ -20,7 +20,7 @@ export const Directory = () => {
             style={{
                 backgroundImage: `url(${shopmen})`
             }}>
-                <a onClick={()=>history.push(`/search/mens`)}>Shop Mens</a>
+                <a onClick={()=>history.push(`/search/mens`)}>Đồ Nam</a>
             </div>
           
         </div>
